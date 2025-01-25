@@ -25,8 +25,6 @@ stages:
             targetType: 'inline'
             script: |
               mvn clean package
-              
-              cp target/JavaLoginShowcase-1.0.0.war $TOMCAT_HOME/webapps/
         
         
         - task: PublishBuildArtifacts@1
