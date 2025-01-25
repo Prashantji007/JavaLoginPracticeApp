@@ -27,3 +27,47 @@ stages:
               mvn clean package
               
               cp target/JavaLoginShowcase-1.0.0.war $TOMCAT_HOME/webapps/
+        
+        
+        - task: PublishBuildArtifacts@1
+          displayName: publish artifacts
+          inputs:
+            PathtoPublish: '$(System.DefaultWorkingDirectory)/build'
+            ArtifactName: 'JAVA_Build_Artifacts'
+            publishLocation: 'Container'
+      
+      - job: DeployArtifactsonserver
+        dependsOn: MavenInstallation
+        displayName: Deploy Artifacts on server
+        steps:
+        - task: DownloadBuildArtifacts@1
+          displayName: Download Build Artifacts
+          inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'JAVA_Build_Artifacts'
+              downloadPath: '$(System.ArtifactsDirectory)'
+        - task: SSH@0
+          displayName: Given Permission On Remote Server
+          inputs:
+              sshEndpoint: 'ssh'
+              runOptions: 'commands'
+              commands: |
+                sudo chmod -R 777 /var/www/html/to-do
+              readyTimeout: '20000'
+        - task: SSH@0
+          displayName: Remove Old Artifacts before copying to new artifacts
+          inputs:
+            sshEndpoint: 'ssh'
+            runOptions: 'commands'
+            commands: 'rm -rf /var/www/html/to-do/*'
+            readyTimeout: '20000'
+            
+        - task: CopyFilesOverSSH@0
+          displayName: Copy Artifacts on remote server
+          inputs:
+                sshEndpoint: 'ssh'
+                sourceFolder: '$(System.ArtifactsDirectory)/JAVA_Build_Artifacts/'
+                contents: '**'
+                targetFolder: '/var/www/html/to-do'
+                readyTimeout: '20000'
