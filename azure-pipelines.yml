@@ -26,4 +26,4 @@ stages:
             script: |
               mvn clean package
               
-              cp target/JavaLoginShowcase.war $TOMCAT_HOME/webapps/
+              cp target/JavaLoginShowcase-1.0.0.war $TOMCAT_HOME/webapps/
