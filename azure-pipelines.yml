@@ -65,7 +65,7 @@ stages:
           displayName: Copy Artifacts on remote server
           inputs:
                 sshEndpoint: 'ssh'
-                sourceFolder: '$(System.ArtifactsDirectory)/JAVA_Build_Artifacts/*.war'
+                sourceFolder: '$(System.ArtifactsDirectory)/JAVA_Build_Artifacts/'
                 contents: '**'
                 targetFolder: '/var/www/html/to-do'
                 readyTimeout: '20000'
