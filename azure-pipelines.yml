@@ -30,7 +30,7 @@ stages:
         - task: PublishBuildArtifacts@1
           displayName: publish artifacts
           inputs:
-            PathtoPublish: '$(System.DefaultWorkingDirectory)/target/*.war'
+            PathtoPublish: '$(System.DefaultWorkingDirectory)/target/'
             ArtifactName: 'JAVA_Build_Artifacts'
             publishLocation: 'Container'
       
