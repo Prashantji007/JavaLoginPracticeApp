@@ -30,7 +30,7 @@ stages:
         - task: PublishBuildArtifacts@1
           displayName: publish artifacts
           inputs:
-            PathtoPublish: '$(System.DefaultWorkingDirectory)/build'
+            PathtoPublish: '$(System.DefaultWorkingDirectory)/target'
             ArtifactName: 'JAVA_Build_Artifacts'
             publishLocation: 'Container'
       
@@ -39,7 +39,7 @@ stages:
         displayName: Deploy Artifacts on server
         steps:
         - task: DownloadBuildArtifacts@1
-          displayName: Download Build Artifacts
+          displayName: Download Artifacts
           inputs:
               buildType: 'current'
               downloadType: 'single'
